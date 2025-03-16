@@ -1,0 +1,283 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --primary-color: #62688d;
+  --secondary-color: #ff4081;
+  --background-color: #ffffff;
+  --text-color: rgba(0, 0, 0, 0.87);
+  --font-family: 'Nunito, sans-serif';
+  --font-size-base: 16px;
+}
+
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* fonts start */
+
+/* fonts 12px */
+.font-12-white-500 {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--background-color);
+}
+.font-12-orange-500 {
+  font-size: 12px;
+  font-weight: 500;
+  color: orange;
+}
+.font-12-blue-500 {
+  font-size: 12px;
+  font-weight: 500;
+  color: #0d99ff;
+}
+.font-12-bluegrey-500 {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+
+/* fonts 14px */
+.font-14-white-500 {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--background-color);
+}
+.font-14-bluegrey-600 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* fonts 16px */
+.font-16-bluegrey-600 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.font-16-black-800 {
+  font-size: 16px;
+  font-weight: 700;
+  color: black;
+}
+.font-16-black-600 {
+  font-size: 16px;
+  font-weight: 600;
+  color: black;
+}
+
+
+.font-16-black-800 {
+  font-size: 16px;
+  font-weight: 800;
+  color: black;
+}
+
+.font-16-white-700 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--background-color);
+}
+
+/* fonts 18px */
+
+.font-18-black-800 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-color);
+}
+/* fonts end */
+
+
+/* Other styling css*/
+
+.Page-Container {
+  padding: 6px;
+}
+
+.Page-ContainerX {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background for blur */
+  backdrop-filter: blur(10px); /* Blur effect */
+  position: relative;
+}
+
+.Animation-Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-image-round {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+}
+.schedule-blue-card{
+  background-color: #0d99ff;
+  height: fit-content;
+  padding: 20px;
+}
+.neardoctor-card{
+  background-color: white;
+  height: fit-content;
+  padding: 15px;
+  /* border: 1px solid rgb(225, 220, 220) */
+}
+
+
+.hr-2 {
+  color: whitesmoke;
+  height: 1px;
+  background-color: whitesmoke; 
+  border: none;
+}
+
+.appointments-container {
+  display: flex; 
+  overflow-x: auto; 
+  max-width: 100%; 
+  white-space: nowrap; 
+  gap: 10px;
+}
+
+.search-bar {
+  display: flex; 
+  align-items: center; 
+  background-color: #f8f6f6; 
+  border-radius: 10px; 
+  height: 50px; 
+  padding: 0 15px; 
+}
+.App-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensures it stays above other elements */
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.search-bar-sticky {
+  position: sticky;
+  top: 50px; /* Adjust if necessary to ensure it’s positioned right below App-sticky */
+  z-index: 1000;
+  background-color: white;
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+.search-input {
+  border: none; 
+  outline: none;
+  background: transparent; 
+  flex: 2;
+  height: 100%; 
+  font-size: 14px; 
+  padding-left: 5px; 
+}
+
+.search-icon {
+  color: #888; 
+  font-size: 24px; 
+}
+
+.suggestion-icon {
+  background-color: #f8f6f6; 
+  width: 70px;
+  height: 70px; 
+}
+
+.suggestion-container {
+  display: flex; 
+  gap: 10px; 
+}
+.appointments-container::-webkit-scrollbar{
+  display: none;
+}
+.suggestion-container::-webkit-scrollbar {
+  display: none; 
+}
+
+.suggestion-item {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+.content-wrapper {
+  padding-bottom: 80px;
+}
+.docview-profilecard{
+  background-color: #0d99ff;
+  height: 230px;
+  border-radius: 0px 0px 30px 30px ;
+}
+
+.vr-line {
+  width: 1px; 
+  height: 40px; 
+  background-color: #6f7281; 
+  margin: 0 15px; 
+}
+.book-appointmnet-button{
+  background-color: #0d99ff;
+  border: 1px solid #0d99ff ;
+  color: white;
+  padding: 4px 8px !important;
+}
+.book-appointmnet-button1{
+  background-color: #E0F7FF;
+  /* border: 1px solid #0d99ff ; */
+  color: #0d99ff;
+}
+.call-button{
+  background-color: rgb(172, 82, 82);
+  border: 1px solid rgb(172, 82, 82) ;
+  color: white;
+}
+
+.capitalize-label {
+  text-transform: capitalize;
+}
+
+.neardoctor-card {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1) !important;
+  border: none;
+
+}
+.bottom-button-sticky{
+      position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 1px 0px;
+    /* z-index: 100; */
+    background-color: white;
+    padding: 14px 0px 12px 0px;
+}
+.custom-datetime {
+    --background: #c0defc; /* Light blue color */
+    --ion-background-color: #7ec2f3; /* Ensures consistent background across themes */
+    --color: white; /* Optional: Adjust text color for contrast */
+    border-radius: 20px;
+    margin-bottom: 40px;
+    padding: 12px 12px 0px 12px;
+}
