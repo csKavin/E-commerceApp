@@ -34,6 +34,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import Login from './pages/Login/Login';
 import LandingPage from './pages/home/home';
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { getData } from './Utils/service';
+import { collections } from './firebaseConfig';
 
 setupIonicReact();
 
@@ -81,6 +83,26 @@ const App: React.FC = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const fetchData = () => {
+    getData(collections.PRODUCTS,"").then((res) => {
+      console.log(res,"dfoihdsfiou");
+      
+    }).catch((err) => {
+        console.log(err);
+ 
+    })
+    getData(collections.TYPES,"").then((res) => {
+      console.log(res,"dfoihdsfiodsfdsu");
+      
+    }).catch((err) => {
+        console.log(err);
+    
+    })
+}
+
+useEffect(() => {
+    fetchData();
+}, [])
   return (
     <ThemeProvider theme={!isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
