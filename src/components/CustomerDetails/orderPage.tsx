@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Paper, Box, Grid } from "@mui/material";
 import { useHistory, useLocation } from "react-router";
-import { products } from "../product";
+import { products as products } from "../product";
 
 const OrderPage = () => {
   const [formData, setFormData] = useState({
@@ -15,10 +15,6 @@ const OrderPage = () => {
   });
 
 
-  const [cart, setCart] = useState([
-    { id: 1, name: "Maternity Gown", price: 2000 },
-  ]);
-
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -28,8 +24,6 @@ const OrderPage = () => {
     console.log("Order placed:", formData);
   };
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
-
   const history = useHistory();
 
   const location = useLocation();
@@ -38,6 +32,8 @@ const OrderPage = () => {
   interface LocationState {
     productId?: number; // Define the expected state type
   }
+
+  const selectedProduct = products.find((product)=> product.id === productId);
   return (
 
     <Container maxWidth="sm" style={{ marginTop: "20px" }}>
@@ -57,7 +53,7 @@ const OrderPage = () => {
 
         <Box display="flex" justifyContent="space-between" style={{ marginTop: "10px", fontWeight: "bold" }}>
           <Typography variant="body1">Total</Typography>
-          <Typography variant="body1">Rs. {subtotal.toFixed(2)}</Typography>
+          <Typography variant="body1">Rs. {selectedProduct?.price}</Typography>
         </Box>
 
         <Box display="flex" justifyContent="space-between" marginTop="20px">
