@@ -14,7 +14,7 @@ import fb from "../../Assests/login/fb.svg";
 import goole from "../../Assests/login/google.svg";
 import Lottie from "react-lottie";
 import animationData from "../../Assests/login/Animation - 1729704510007.json";
-import Loader from '../../components/TurboLoader/TurboLoader';
+import Loader from '../../components/ProfilePage/TurboLoader/TurboLoader';
 import { useHistory } from 'react-router';
 import { IonContent, IonPage } from '@ionic/react';
 
@@ -79,9 +79,6 @@ export default function LoginScreen() {
                                 placeholder="Email your Password"
                                 sx={{ background: '#F1F4FF', color: "#626262" }}
                             />
-                            <Link href="#" variant="body2" sx={{ float: 'right', mt: 1 }}>
-                                Forgot your password?
-                            </Link>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -91,15 +88,6 @@ export default function LoginScreen() {
                             >
                                 Sign in
                             </Button>
-                            <Divider>Social Login</Divider>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                <IconButton>
-                                    <img src={fb} width="40px" />
-                                </IconButton>
-                                <IconButton>
-                                    <img src={goole} width="40px" />
-                                </IconButton>
-                            </Box>
 
                         </Box>
                     </Box>

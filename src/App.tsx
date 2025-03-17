@@ -36,6 +36,11 @@ import LandingPage from './pages/home/home';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { getData } from './Utils/service';
 import { collections } from './firebaseConfig';
+import ProfilePage from './components/ProfilePage/profilePage';
+import ViewProduct from './components/ViewProduct/viewProduct';
+import ProductCard from './components/productCard/productCard';
+import Orders from './components/Orders/Orders';
+import { OrderPage } from './components/CustomerDetails/orderPage';
 
 setupIonicReact();
 
@@ -84,25 +89,25 @@ const App: React.FC = () => {
   };
 
   const fetchData = () => {
-    getData(collections.PRODUCTS,"").then((res) => {
-      console.log(res,"dfoihdsfiou");
-      
-    }).catch((err) => {
-        console.log(err);
- 
-    })
-    getData(collections.TYPES,"").then((res) => {
-      console.log(res,"dfoihdsfiodsfdsu");
-      
-    }).catch((err) => {
-        console.log(err);
-    
-    })
-}
+    getData(collections.PRODUCTS, "").then((res) => {
+      console.log(res, "dfoihdsfiou");
 
-useEffect(() => {
+    }).catch((err) => {
+      console.log(err);
+
+    })
+    getData(collections.TYPES, "").then((res) => {
+      console.log(res, "dfoihdsfiodsfdsu");
+
+    }).catch((err) => {
+      console.log(err);
+
+    })
+  }
+
+  useEffect(() => {
     fetchData();
-}, [])
+  }, [])
   return (
     <ThemeProvider theme={!isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
@@ -116,15 +121,49 @@ useEffect(() => {
                 )
               }}>
               </Route>
+              <Route exact path="/profile" render={() => {
+                return (
+                  <ProfilePage />
+                )
+              }}>
+              </Route>
+
+              <Route exact path="/viewProduct/:id" render={() => {
+                return (
+                  <ViewProduct />
+                )
+
+              }}>
+              </Route>
+
               <Route exact path="/home" render={() => {
                 return (
                   <LandingPage />
                 )
               }}>
               </Route>
+
+              <Route exact path="/order" render={() => {
+                return (
+                  <Orders />
+                )
+              }} ></Route>
+
+              <Route exact path="/orderpage" render={() => {
+                return (
+                  <OrderPage />
+                )
+
+              }} ></Route>
+
+
+
               <Route exact path="/">
                 <Redirect to="/login" />
               </Route>
+
+
+
             </Suspense>
           </IonRouterOutlet>
         </IonReactRouter>

@@ -1,6 +1,6 @@
 import React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
-import loader from "../../Assests/login/Animation - 1729705082809.json"
+import loader from "../../../Assests/login/Animation - 1729705082809.json"
 import Lottie from "react-lottie";
 
 const useStyles: any = {
