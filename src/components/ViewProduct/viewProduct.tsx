@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import {
   IonPage,
@@ -28,13 +28,40 @@ import {
 
 import './viewProduct.css';
 import { products } from "../product";
+import { getData } from "../../Utils/service";
+import { collections } from "../../firebaseConfig";
 
 const ViewProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  console.log(id,"slfknsfoui");
+  
   const history = useHistory();
-  const product = products.find((p) => p.id === parseInt(id));
+  const [data, setData] = useState<any>([])
+  useEffect(() => {
+    getData(collections.PRODUCTS, "").then((res) => {
+      let response: any = res
+      let tempArray = response.map((item: any, index: number) => {
+        return {
+          id: item?.info?.id,
+          name: item?.name,
+          notes: item?.notes,
+          description: item?.description,
+          price: item?.price,
+          image: item?.image
+        }
+      })
+      console.log(tempArray,"dsofuieih");
+      
+      const product = tempArray?.find((p: any) => p.id === id);
+      console.log(product,"skfjkubnsiouf");
+      
+      setData(product)
+    }).catch((err) => {
+      console.log(err);
+    })
+  }, [])
 
-  if (!product) {
+  if (!data) {
     return (
       <IonPage>
         <IonHeader>
@@ -57,7 +84,7 @@ const ViewProduct: React.FC = () => {
       {/* Header */}
       <IonHeader>
         <IonToolbar style={{ background: "linear-gradient(135deg, #0070f3, #0045a2)" }}>
-          <IonTitle className="text-center">{product.category}</IonTitle>
+          <IonTitle className="text-center">{data?.name}</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -69,11 +96,11 @@ const ViewProduct: React.FC = () => {
         }}
       >
         <IonGrid>
-          {/* Product Image */}
+          {/* data Image */}
           <IonRow className="ion-justify-content-center">
             <IonCol size="12" className="ion-text-center">
-              <IonCard style={{ borderRadius: "10px", overflow: "hidden", boxShadow: "0px 5px 15px rgba(0,0,0,0.3)", height: "300px" }}>
-                <IonImg src={product.image} alt={product.name} />
+              <IonCard style={{ borderRadius: "10px", overflow: "hidden" }}>
+                <IonImg src={data?.image} alt={data?.name} />
               </IonCard>
             </IonCol>
           </IonRow>
@@ -84,15 +111,15 @@ const ViewProduct: React.FC = () => {
               <div style={{ padding: "15px", textAlign: "center" }}>
                 <IonCardHeader>
                   <IonCardTitle style={{ fontWeight: "bold", fontSize: "1.8rem", color: "#333", paddingBottom: "10px" }}>
-                    {product.name}
+                    {data?.name}
                   </IonCardTitle>
                   <h3 style={{ color: "#0070f3", fontSize: "1.2rem" }}>
-                    {product.category}
+                    {data?.category}
                   </h3>
                 </IonCardHeader>
                 <IonCardContent>
                   <p style={{ fontSize: "1rem", color: "#555", padding: "0 10px" }}>
-                    {product.description}
+                    {data?.description}
                   </p>
                 </IonCardContent>
               </div>
@@ -103,10 +130,10 @@ const ViewProduct: React.FC = () => {
           <IonRow>
             <IonCol size="12" className="ion-text-center">
               <h2 style={{ color: "#28a745", fontWeight: "bold", fontSize: "2rem" }}>
-                ₹{product.price}
+                ₹{data?.price}
               </h2>
-              <h5 style={{ color: product.availability === "In Stock" ? "#28a745" : "red", fontSize: "1.2rem" }}>
-                <IonIcon icon={checkmarkCircleOutline} /> {product.availability}
+              <h5 style={{ color: "#28a745", fontSize: "1.2rem" }}>
+                <IonIcon icon={checkmarkCircleOutline} /> In Stock
               </h5>
             </IonCol>
           </IonRow>
@@ -121,8 +148,8 @@ const ViewProduct: React.FC = () => {
                   </IonCardTitle>
                 </IonCardHeader>
                 <IonCardContent>
-                  <IonList lines="none">
-                    {product.specifications}
+                  <IonList lines="none" style={{textAlign: "center" }}>
+                    {data?.notes}
                   </IonList>
                 </IonCardContent>
               </div>
@@ -134,9 +161,9 @@ const ViewProduct: React.FC = () => {
             <IonCol size="12">
               <div style={{ textAlign: "center" }}>
                 <IonCardContent>
-                  <h5><strong>Warranty:</strong> {product.availability}</h5>
-                  <h5><strong>Delivery Time:</strong> {product.shipping.deliveryTime}</h5>
-                  <h5><strong>Shipping Cost:</strong> {product.shipping.shippingCost}</h5>
+                  <h5><strong>Warranty:</strong> In Stock</h5>
+                  <h5><strong>Delivery Time:</strong> "2-4 business days</h5>
+                  <h5><strong>Shipping Cost:</strong> Free</h5>
                 </IonCardContent>
               </div>
             </IonCol>
@@ -150,7 +177,7 @@ const ViewProduct: React.FC = () => {
                   shape="round"
                   color="primary"
                   className="custom-button"
-                  onClick={() => history.push("/orderpage", { productId: product.id })}
+                  onClick={() => history.push("/orderpage", { productId: data.id,data : data })}
                 >
                   <IonIcon icon={cartOutline} slot="start" />
                   Order Now

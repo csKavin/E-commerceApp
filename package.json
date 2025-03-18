@@ -35,6 +35,7 @@
     "firebase": "^11.4.0",
     "ionicons": "^7.0.0",
     "moment-timezone": "^0.5.46",
+    "razorpay": "^2.9.6",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",

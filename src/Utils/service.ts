@@ -1,9 +1,10 @@
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { collections, db, storageBucket } from "../firebaseConfig";
+import { auth, collections, db, storageBucket } from "../firebaseConfig";
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import moment from "moment";
 import { removeNullKeys } from "./helpers";
 import { query, where, } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export const getFileURL = async (file : any, folder: any, name: any) => {
   try {
@@ -180,6 +181,44 @@ export const getDocument = async (table : any, documentId : any, userId : any) =
     return err;
   }
 }
+
+  export const login = async (data : any) => {
+    const response = await signInWithEmailAndPassword(auth, data.email, data.password);
+    // setTrigger(trigger + 1);
+    return response;
+  };
+  
+  // Logout function
+  export const logout = async () => {
+    await auth.signOut();
+    // setTrigger(trigger + 1);
+  };
+  
+  // Register function (creating a user in Firestore)
+  export const register = async (data: any) => {
+    try {
+        if (data.password !== data.confirmPassword) {
+            throw new Error("Passwords do not match");
+        }
+
+        // Create a new user with email and password
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+
+        // Create a user document in Firestore
+        await addDoc(collection(db, collections.USERS), {
+            uid: userCredential.user.uid,
+            email: data.email,
+            role: 'ADMIN', // Default role, you can adjust as needed
+            createdAt: new Date(),
+        });
+
+        await login(data);
+    } catch (error) {
+        console.error("Error creating user: ", error);
+        throw error;
+    }
+};
+
 
 
 

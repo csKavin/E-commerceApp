@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppLayout from "../../components/BottomNavigation";
 import { IonContent, IonPage } from "@ionic/react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -6,11 +6,14 @@ import ProductCard from "../../components/productCard/productCard";
 import { Box, Grid, Typography, TextField } from "@mui/material";
 import { products } from "../../components/product";
 import { user } from "../../components/user";
+import { getData } from "../../Utils/service";
+import { collections } from "../../firebaseConfig";
 
 const Home = () => {
   const [cart, setCart] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const [showSearch, setShowSearch] = useState(false); // Toggle search bar
+  const [data,setData] = useState<any>([]);
 
   const handleAddToCart = (id: number) => {
     setCart([...cart, id]);
@@ -21,6 +24,25 @@ const Home = () => {
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(()=>{
+    getData(collections.PRODUCTS,"").then((res)=>{
+      let response : any = res
+      let tempArray = response.map((item:any,index:number)=>{
+        return {
+          id : item?.info?.id,
+          name : item?.name,
+          notes : item?.notes,
+          description: item?.description,
+          price : item?.price,
+          image : item?.image
+        }
+      })
+      setData(tempArray)
+    }).catch((err)=>{
+      console.log(err);
+    })
+  },[])
   
   return (
     <IonPage>
@@ -98,8 +120,8 @@ const Home = () => {
 
         {/* Product Listing - Shows Only Filtered Products */}
         <Grid container spacing={2} style={{ paddingBottom: "80px" }}>
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product) => (
+          {data.length > 0 ? (
+            data.map((product:any) => (
               <Grid item xs={12} key={product.id}>
                 <ProductCard product={product} onAddToCart={handleAddToCart} />
               </Grid>

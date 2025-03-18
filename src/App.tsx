@@ -41,6 +41,7 @@ import ViewProduct from './components/ViewProduct/viewProduct';
 import ProductCard from './components/productCard/productCard';
 import Orders from './components/Orders/Orders';
 import { OrderPage } from './components/CustomerDetails/orderPage';
+import SignUpScreen from './pages/SignUp/SignUp';
 
 setupIonicReact();
 
@@ -118,6 +119,12 @@ const App: React.FC = () => {
               <Route exact path="/login" render={() => {
                 return (
                   <Login />
+                )
+              }}>
+              </Route>
+              <Route exact path="/signUp" render={() => {
+                return (
+                  <SignUpScreen />
                 )
               }}>
               </Route>

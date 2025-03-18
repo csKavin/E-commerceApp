@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Container, TextField, Button, Typography, Paper, Box, Grid } from "@mui/material";
 import { useHistory, useLocation } from "react-router";
 import { products as products } from "../product";
+import { addData } from "../../Utils/service";
+import { collections } from "../../firebaseConfig";
 
 const OrderPage = () => {
   const [formData, setFormData] = useState({
@@ -21,19 +23,67 @@ const OrderPage = () => {
 
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    console.log("Order placed:", formData);
+
+    const options = {
+      key: "rzp_test_upCcbHmpgFGb7L",
+      amount: 500,
+      currency: "INR",
+      name: "ESS commerce",
+      description: "Test Transaction",
+      handler: async function (response:any) {
+          try {
+            let payload = {
+              name : formData?.firstName +" "+ formData?.lastName,
+              address : formData.address,
+              city:formData.city,
+              state : formData.state,
+              pinCode : formData.pinCode,
+              phone:formData.phone,
+              price:data.price,
+              id : productId,
+              paymentId : response?.razorpay_payment_id
+             }
+              addData(collections.ORDERS,payload,"").then((res:any)=>{
+                history.push("/home")
+              }).catch((err:any)=>{
+                alert("something went wrong try again")
+              })
+              
+          } catch (error) {
+              console.error("Error updating data:", error);
+             
+              alert("Failed to update order. Please try again.");
+          } finally {
+              // setLoading(false);
+          }
+      },
+
+      prefill: {
+          name: "John Doe",
+          email: "john.doe@example.com",
+          contact: "9999999999",
+      },
+      theme: {
+          color: "#3399cc",
+      },
+  };
+
+  const razorpay = new (window as any).Razorpay(options);
+  razorpay.open();
+    
+
   };
 
   const history = useHistory();
 
   const location = useLocation();
-  const { productId } = location.state as LocationState;
+  const { productId,data } = location.state as any;
 
-  interface LocationState {
-    productId?: number; // Define the expected state type
-  }
 
-  const selectedProduct = products.find((product)=> product.id === productId);
+
+  // const selectedProduct = products.find((product)=> product.id === productId);
+
+
   return (
 
     <Container maxWidth="sm" style={{ marginTop: "20px" }}>
@@ -53,7 +103,7 @@ const OrderPage = () => {
 
         <Box display="flex" justifyContent="space-between" style={{ marginTop: "10px", fontWeight: "bold" }}>
           <Typography variant="body1">Total</Typography>
-          <Typography variant="body1">Rs. {selectedProduct?.price}</Typography>
+          <Typography variant="body1">Rs. {data?.price}</Typography>
         </Box>
 
         <Box display="flex" justifyContent="space-between" marginTop="20px">
