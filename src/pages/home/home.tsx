@@ -8,6 +8,7 @@ import { products } from "../../components/product";
 import { user } from "../../components/user";
 import { getData } from "../../Utils/service";
 import { collections } from "../../firebaseConfig";
+import brandImage from '../../Assests/home/Ess Logo.jpg';
 
 const Home = () => {
   const [cart, setCart] = useState<number[]>([]);
@@ -66,7 +67,7 @@ const Home = () => {
               {/* Profile Image */}
               <div>
                 <img
-                  src="https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Clip-Art-Transparent-PNG.png"
+                  src={brandImage}
                   className="rounded-5 header-image-round"
                   style={{ width: "40px", height: "40px", borderRadius: "50%" }}
                 />
