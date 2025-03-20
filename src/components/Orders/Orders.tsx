@@ -95,20 +95,15 @@ const Orders: React.FC = () => {
             <Card key={order?.id} className="order-card">
                 <CardContent>
                     <IonGrid>
-                        <IonRow className="ion-align-items-center">
-                            <IonCol size="3">
-                                <IonImg src={order?.image} className="order-img" />
-                            </IonCol>
-                            <IonCol size="5">
-                                <IonText>
-                                    <h3 className="order-item-title">{order?.name}</h3>
-                                </IonText>
-                            </IonCol>
-                            <IonCol size="3" className="">
-                                <p className="order-price discount-badge text-center">IDR {order?.price}</p>
-                                <p className="quantity">Quantity 1</p>
-                            </IonCol>
-                        </IonRow>
+                        <div className="d-flex align-items-center justify-content-between">
+                        <IonImg src={order?.image} className="order-img" />
+                        <h3 className="order-item-title">{order?.name}</h3>
+                            <div className="mt-3">
+                            <p className="order-price discount-badge text-center">IDR {order?.price}</p>
+                            <p className="quantity">Quantity 1</p>
+                            </div>
+                        </div>
+                    
                     </IonGrid>
                 </CardContent>
             </Card>
