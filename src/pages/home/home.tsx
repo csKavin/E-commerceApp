@@ -5,7 +5,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import ProductCard from "../../components/productCard/productCard";
 import { Box, Grid, Typography, TextField } from "@mui/material";
 import { products } from "../../components/product";
-import { user } from "../../components/user";
 import { getData } from "../../Utils/service";
 import { collections } from "../../firebaseConfig";
 import brandImage from '../../Assests/home/Ess Logo.jpg';
@@ -15,16 +14,22 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const [showSearch, setShowSearch] = useState(false); // Toggle search bar
   const [data,setData] = useState<any>([]);
+  const [user, setUser] = useState();
 
   const handleAddToCart = (id: number) => {
     setCart([...cart, id]);
   };
 
   // Filter products based on search term
-  const filteredProducts = products.filter((product) =>
+  const filteredProducts = () =>
+    products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(()=>{
+    filteredProducts()
+  },[searchTerm]);
 
   useEffect(()=>{
     getData(collections.PRODUCTS,"").then((res)=>{
@@ -44,6 +49,22 @@ const Home = () => {
       console.log(err);
     })
   },[])
+
+  const userID = localStorage.getItem("userId");
+
+  const fetchUser = async () =>{
+    await getData(collections.USERS, "").then((res: any) => {
+      const userData = res.find((user: any) => user.uid === userID);
+      if (userData) {
+        const userName = userData?.name;
+        setUser(userName);
+      }
+    })
+  }
+
+ useEffect(()=>{
+    fetchUser();
+  },[userID]);
   
   return (
     <IonPage>
@@ -83,7 +104,7 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                {user.name}
+                {user}
               </div>
 
               {/* Search Icon - Toggle Search Input */}

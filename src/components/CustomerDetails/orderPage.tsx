@@ -24,6 +24,9 @@ const OrderPage = () => {
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
+    const userID = localStorage.getItem("userId");
+    console.log(userID,"OrderPageUserID");
+
     const options = {
       key: "rzp_test_upCcbHmpgFGb7L",
       amount: 500,
@@ -42,8 +45,9 @@ const OrderPage = () => {
               price:data.price,
               id : productId,
               paymentId : response?.razorpay_payment_id
-             }
-              addData(collections.ORDERS,payload,"").then((res:any)=>{
+            }
+            
+            addData(collections.ORDERS,payload,userID).then((res:any)=>{
                 history.push("/home")
               }).catch((err:any)=>{
                 alert("something went wrong try again")
@@ -113,6 +117,7 @@ const OrderPage = () => {
             variant="contained"
             color="primary"
             fullWidth
+            onClick={handleSubmit}
             sx={{
               padding: "12px",
               fontSize: "1.1rem",

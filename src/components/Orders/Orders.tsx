@@ -5,27 +5,26 @@ import { Card, CardContent, IconButton, Select, MenuItem, Typography } from "@mu
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./Orders.css";
 import AppLayout from "../BottomNavigation";
-import { products as initialOrders } from "../product";
 import { getData } from "../../Utils/service";
 import { collections } from "../../firebaseConfig";
 
 const quantity = 1;
 
 const Orders: React.FC = () => {
-    const [orders, setOrders] = useState(initialOrders);
     const [userId, setUserId] = useState("");
     const [data, setData] = useState<any>();
 
     useEffect(() => {
-
         let temp: any = localStorage.getItem("userId");
         setUserId(temp);
         getOrders()
     }, []);
-
+    
     const getOrders = async () => {
         try {
-            const res : any = await getData(collections.ORDERS, userId);
+            const res : any = await getData(collections.ORDERS, "");
+            console.log("allproducts",res);
+            
             const tempArrayPromises : any = res.map(async (item: any) => {
                 const product = await orderProduct(item.id);
                 return product;
@@ -35,7 +34,7 @@ const Orders: React.FC = () => {
             const allProducts = await Promise.all(tempArrayPromises);
             dummy.push(allProducts)
             setData(dummy);
-    
+            
             // Do something with allProducts
             console.log(dummy,"sjnfolfhn");
             
